@@ -1,9 +1,9 @@
-from os import wait
 import standardize_dataset as sd 
 import numpy as np
 
 iris_features, len_iris_dataset = sd.standardize_dataset()
 print(len_iris_dataset)
+
 
 # covariance_matrix
 def covariance_matrix(X, n_rows):
@@ -16,18 +16,24 @@ def compute_eigen_vectors(X, n_rows):
     eigen_values, eigen_vectors = np.linalg.eig(C)
     return eigen_values, eigen_vectors
 
-eigen_values, eigen_vectors = compute_eigen_vectors(iris_features, len_iris_dataset)
+# obtain principal components
+def get_principal_components(): 
+    eigen_values, eigen_vectors = compute_eigen_vectors(iris_features, len_iris_dataset)
 
-print(eigen_values)
-print(eigen_vectors)
+    print(eigen_values)
+    print(eigen_vectors)
 
-# sort the eigen values and eigen vectors
-sort = np.argsort(eigen_values)[::-1]
+    # sort the eigen values and eigen vectors
+    sort = np.argsort(eigen_values)[::-1]
+    
+    pca_components = 3
 
-# use sort array to order eigen_vectors
-principal_components = eigen_vectors[:, sort]
+    # use sort array to order eigen_vectors
+    principal_components = eigen_vectors[:, sort]
+    return principal_components[:pca_components]
 
-print(principal_components)
+if __name__ == "__main__":
+    get_principal_components()
 
 
 
